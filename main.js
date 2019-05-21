@@ -1,3 +1,8 @@
+//This select grabs the box (moving pieces) and panels from the DOM
+//also creates variables to store the currently selected box and panel
+//and initiates the game functionality by calling the function to
+//make the boxes interactive
+
 const anyBox = document.querySelectorAll(".box");
 const firstPanel = document.querySelector(".firstPanel");
 const secondPanel = document.querySelector(".secondPanel");
@@ -84,7 +89,7 @@ function checkSizing() {
   if (selectedPanel.firstElementChild === null) {
     return;
   } else if (
-    selectedBox.dataset.length > selectedPanel.firstElementChild.dataset.length
+    selectedBox.dataset.length > selectedPanel.lastElementChild.dataset.length
   ) {
     return false;
   }
