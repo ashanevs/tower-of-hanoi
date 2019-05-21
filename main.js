@@ -23,6 +23,7 @@ function addBoxTargets() {
         selectedBox = evt.target;
         if (selectedBox.nextElementSibling === null) {
           anyBox[i].style.border = "2px solid black";
+          anyBox[i].style.margin = "0px 0px 10px 0px";
           evt.stopPropagation();
           addPanelTargets();
         } else {
@@ -45,6 +46,7 @@ function addPanelTargets() {
     if (!selectedBox) return;
     selectedPanel = firstPanel;
     if (checkSizing() === false) {
+      selectedBox.style.margin = "2px 0px";
       selectedBox.style.border = "2px solid red";
       evt.target.removeEventListener("click", evt);
       selectedBox = null;
@@ -52,6 +54,7 @@ function addPanelTargets() {
       return;
     }
     firstPanel.appendChild(selectedBox);
+    selectedBox.style.margin = "2px 0px";
     selectedBox.style.border = "2px solid red";
     evt.target.removeEventListener("click", evt);
     selectedBox = null;
@@ -63,6 +66,7 @@ function addPanelTargets() {
     if (!selectedBox) return;
     selectedPanel = secondPanel;
     if (checkSizing() === false) {
+      selectedBox.style.margin = "2px 0px";
       selectedBox.style.border = "2px solid red";
       evt.target.removeEventListener("click", evt);
       selectedBox = null;
@@ -70,6 +74,7 @@ function addPanelTargets() {
       return;
     }
     secondPanel.appendChild(selectedBox);
+    selectedBox.style.margin = "2px 0px";
     selectedBox.style.border = "2px solid red";
     evt.target.removeEventListener("click", evt);
     selectedBox = null;
@@ -81,6 +86,7 @@ function addPanelTargets() {
     if (!selectedBox) return;
     selectedPanel = thirdPanel;
     if (checkSizing() === false) {
+      selectedBox.style.margin = "2px 0px";
       selectedBox.style.border = "2px solid red";
       evt.target.removeEventListener("click", evt);
       selectedBox = null;
@@ -88,6 +94,7 @@ function addPanelTargets() {
       return;
     }
     thirdPanel.appendChild(selectedBox);
+    selectedBox.style.margin = "2px 0px";
     selectedBox.style.border = "2px solid red";
     evt.target.removeEventListener("click", evt);
     selectedBox = null;
