@@ -1,7 +1,6 @@
-//This select grabs the box (moving pieces) and panels from the DOM
-//also creates variables to store the currently selected box and panel
-//and initiates the game functionality by calling the function to
-//make the boxes interactive
+//This section creates const variables for the boxes (moving items) and panels in the DOM.
+//Also creates variables to store the currently selected box and panel.
+//Lastly, calls function to allow initial interaction with boxes on page load
 
 const anyBox = document.querySelectorAll(".box");
 const firstPanel = document.querySelector(".firstPanel");
@@ -10,6 +9,11 @@ const thirdPanel = document.querySelector(".thirdPanel");
 var selectedBox;
 var selectedPanel;
 addBoxTargets();
+
+//This function adds event listeners to the boxes. It checks to make sure no box is currently selected,
+//and also checks to make sure that there is no box above the selection (to ensure you can only
+//select the top box of any column). Upon click, the selected box gains a black border, and
+//calls the function allowing the panel destination to be clicked
 
 function addBoxTargets() {
   for (let i = 0; i < 5; i++)
@@ -28,6 +32,12 @@ function addBoxTargets() {
       }
     });
 }
+
+//This function adds event listeners to the panel sections. On click, the function first checks
+//to ensure a box has been selected. A size checking function checks whether or not the box is valid
+//in the context of the current panel contents; if not, the box is deselected, the panel listener is
+//turned off, and the box-input listeners are reactivated. If the size check passes, the selected box
+//is appended to the panel before resetting the game-state to await box-interactions again
 
 function addPanelTargets() {
   firstPanel.addEventListener("click", function(evt) {
@@ -85,6 +95,10 @@ function addPanelTargets() {
   });
 }
 
+//This function checks to see if a panel is empty, in which case a box-move is always permissable.
+//If the panel is not empty, the function checks to see if the incoming selectedBox is larger than
+//the "top" box currently in the division.
+
 function checkSizing() {
   if (selectedPanel.firstElementChild === null) {
     return;
@@ -95,9 +109,11 @@ function checkSizing() {
   }
 }
 
-function checkBoxForSibling() {
-  if (selectedBox.nextElementSibling === null) {
-    return;
-  }
-  return false;
-}
+//This function was never incorporated and might not be used
+
+// function checkBoxForSibling() {
+//   if (selectedBox.nextElementSibling === null) {
+//     return;
+//   }
+//   return false;
+// }
