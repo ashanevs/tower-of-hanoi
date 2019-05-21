@@ -4,6 +4,7 @@ const secondPanel = document.querySelector(".secondPanel");
 const thirdPanel = document.querySelector(".thirdPanel");
 var selectedBox;
 var selectedPanel;
+addBoxTargets();
 
 function addBoxTargets() {
   for (let i = 0; i < 5; i++)
@@ -11,14 +12,17 @@ function addBoxTargets() {
       evt.preventDefault();
       if (!selectedBox) {
         selectedBox = evt.target;
-        anyBox[i].style.border = "2px solid black";
-        evt.stopPropagation();
-        addPanelTargets();
+        if (selectedBox.nextElementSibling === null) {
+          anyBox[i].style.border = "2px solid black";
+          evt.stopPropagation();
+          addPanelTargets();
+        } else {
+          selectedBox = null;
+          addBoxTargets();
+        }
       }
     });
 }
-
-addBoxTargets();
 
 function addPanelTargets() {
   firstPanel.addEventListener("click", function(evt) {
@@ -77,11 +81,18 @@ function addPanelTargets() {
 }
 
 function checkSizing() {
-  if (!selectedPanel.hasChildNodes()) {
+  if (selectedPanel.firstElementChild === null) {
     return;
   } else if (
     selectedBox.dataset.length > selectedPanel.firstElementChild.dataset.length
   ) {
     return false;
   }
+}
+
+function checkBoxForSibling() {
+  if (selectedBox.nextElementSibling === null) {
+    return;
+  }
+  return false;
 }
