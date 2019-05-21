@@ -18,31 +18,39 @@ body {
   margin: 0 10px;
   height: 500px;
 }
+.firstPanel {
+  padding: 0px 0px 10px 0px;
+}
 .counter {
   font-size: 24px;
 }
 .box-a {
-  padding: 20px 180px;
+  width: 45%;
+  padding: 20px;
   margin: 2px 0;
   border: 2px solid red;
 }
 .box-b {
-  padding: 20px 140px;
+  width: 35%;
+  padding: 20px;
   margin: 2px 0;
   border: 2px solid red;
 }
 .box-c {
-  padding: 20px 100px;
+  width: 25%;
+  padding: 20px;
   margin: 2px 0;
   border: 2px solid red;
 }
 .box-d {
-  padding: 20px 60px;
+  width: 15%;
+  padding: 20px;
   margin: 2px 0;
   border: 2px solid red;
 }
 .box-e {
-  padding: 20px 20px;
+  width: 5%;
+  padding: 20px;
   margin: 2px 0;
   border: 2px solid red;
 }
