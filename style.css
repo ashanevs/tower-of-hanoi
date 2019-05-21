@@ -1,0 +1,48 @@
+body {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  height: 500px;
+}
+.panels {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  border: 5px solid black;
+  width: 28%;
+  margin: 0 10px;
+  height: 500px;
+}
+.counter {
+  font-size: 24px;
+}
+.box-a {
+  padding: 20px 180px;
+  margin: 2px 0;
+  border: 2px solid red;
+}
+.box-b {
+  padding: 20px 140px;
+  margin: 2px 0;
+  border: 2px solid red;
+}
+.box-c {
+  padding: 20px 100px;
+  margin: 2px 0;
+  border: 2px solid red;
+}
+.box-d {
+  padding: 20px 60px;
+  margin: 2px 0;
+  border: 2px solid red;
+}
+.box-e {
+  padding: 20px 20px;
+  margin: 2px 0;
+  border: 2px solid red;
+}
