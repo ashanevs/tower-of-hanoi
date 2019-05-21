@@ -4,16 +4,49 @@ const secondPanel = document.querySelector(".secondPanel");
 const thirdPanel = document.querySelector(".thirdPanel");
 var selectedBox;
 
-for (let i = 0; i < 5; i++) {
-  anyBox[i].addEventListener("click", function(evt) {
-    evt.preventDefault();
-    selectedBox = document.querySelectorAll(".box")[i];
-    anyBox[i].style.border = "2px solid black";
-    // anyBox[i].removeEventListener("click", evt);
-  });
+function addBoxTargets() {
+  for (let i = 0; i < 5; i++)
+    anyBox[i].addEventListener("click", function(evt) {
+      evt.preventDefault();
+      if (!selectedBox) {
+        selectedBox = evt.target;
+        anyBox[i].style.border = "2px solid black";
+        evt.stopPropagation();
+        addPanelTargets();
+      }
+    });
 }
 
-secondPanel.addEventListener("click", function(evt) {
-  evt.preventDefault();
-  secondPanel.appendChild(selectedBox);
-});
+addBoxTargets();
+
+function addPanelTargets() {
+  firstPanel.addEventListener("click", function(evt) {
+    evt.preventDefault();
+    if (!selectedBox) return;
+    firstPanel.appendChild(selectedBox);
+    selectedBox.style.border = "2px solid red";
+    evt.target.removeEventListener("click", evt);
+    selectedBox = null;
+    addBoxTargets();
+  });
+
+  secondPanel.addEventListener("click", function(evt) {
+    evt.preventDefault();
+    if (!selectedBox) return;
+    secondPanel.appendChild(selectedBox);
+    selectedBox.style.border = "2px solid red";
+    evt.target.removeEventListener("click", evt);
+    selectedBox = null;
+    addBoxTargets();
+  });
+
+  thirdPanel.addEventListener("click", function(evt) {
+    evt.preventDefault();
+    if (!selectedBox) return;
+    thirdPanel.appendChild(selectedBox);
+    selectedBox.style.border = "2px solid red";
+    evt.target.removeEventListener("click", evt);
+    selectedBox = null;
+    addBoxTargets();
+  });
+}
