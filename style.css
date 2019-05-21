@@ -18,7 +18,9 @@ body {
   margin: 0 10px;
   height: 500px;
 }
-.firstPanel {
+.firstPanel,
+.secondPanel,
+.thirdPanel {
   padding: 0px 0px 10px 0px;
 }
 .counter {
