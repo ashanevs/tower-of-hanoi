@@ -6,30 +6,38 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Tower of Hanoi by Shane Vann-Shirley</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Tangerine&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <h1>Tower of Hanoi</h1>
     <div class="container">
-      <div class="firstPanel panels">
-        <div class="box box-e" data-length="5">E</div>
-        <div class="box box-d" data-length="4">D</div>
-        <div class="box box-c" data-length="3">C</div>
-        <div class="box box-b" data-length="2">B</div>
-        <div class="box box-a" data-length="1">A</div>
+      <div class="first-panel panels">
+        <div class="box box-e" data-length="5"></div>
+        <div class="box box-d" data-length="4"></div>
+        <div class="box box-c" data-length="3"></div>
+        <div class="box box-b" data-length="2"></div>
+        <div class="box box-a" data-length="1"></div>
       </div>
-      <div class="secondPanel panels"></div>
-      <div class="thirdPanel panels"></div>
+      <div class="second-panel panels"></div>
+      <div class="third-panel panels"></div>
     </div>
-
-    <button type="button" class="resetbutton">Reset</button>
-    <button type="button" class="testbutton">Test</button>
+    <div class="win-screen">Congratulations! You won</div>
+    <div class="button-div">
+      <button type="button" class="resetbutton">Reset</button>
+      <button type="button" class="testbutton">Skip</button>
+      <div class="move-counter">0</div>
+    </div>
     <p>
       Instructions: Your goal is to move all the blocks into the last column.
       Move the blocks by clicking on a block and then clicking on the column you
       want to place it in. Only one block can be moved at a time. You can only
       move the top block of any column.
-      <strong>You may not place a block onto one smaller than itself.</strong>
+      <span>You may not place a block onto one smaller than itself.</span>
     </p>
+    <p>created by Shane Vann-Shirley, 2019</p>
     <script type="text/javascript" src="main.js"></script>
   </body>
 </html>

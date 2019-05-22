@@ -1,15 +1,20 @@
-//This section creates const variables for the boxes (moving items) and panels in the DOM.
+//This section creates const variables for the boxes (moving items), panels, and buttons in the DOM
 //Also creates variables to store the currently selected box and panel.
 //Lastly, calls function to allow initial interaction with boxes on page load
 
 const anyBox = document.querySelectorAll(".box");
-const firstPanel = document.querySelector(".firstPanel");
-const secondPanel = document.querySelector(".secondPanel");
-const thirdPanel = document.querySelector(".thirdPanel");
+const firstPanel = document.querySelector(".first-panel");
+const secondPanel = document.querySelector(".second-panel");
+const thirdPanel = document.querySelector(".third-panel");
 const resetButton = document.querySelector(".resetbutton");
 const testButton = document.querySelector(".testbutton");
+const panelContainer = document.querySelector(".container");
+const winScreen = document.querySelector(".win-screen");
+const moveCounterBox = document.querySelector(".move-counter");
 var selectedBox;
 var selectedPanel;
+var moveCounter = 0;
+
 addBoxTargets();
 
 //This function adds event listeners to the boxes. It checks to make sure no box is currently selected,
@@ -24,7 +29,7 @@ function addBoxTargets() {
       if (!selectedBox) {
         selectedBox = evt.target;
         if (selectedBox.nextElementSibling === null) {
-          anyBox[i].style.border = "2px solid black";
+          anyBox[i].style.border = "5px solid red";
           anyBox[i].style.margin = "0px 0px 10px 0px";
           evt.stopPropagation();
           addPanelTargets();
@@ -49,15 +54,17 @@ function addPanelTargets() {
     selectedPanel = firstPanel;
     if (checkSizing() === false) {
       selectedBox.style.margin = "2px 0px";
-      selectedBox.style.border = "2px solid red";
+      selectedBox.style.border = "5px solid red";
       evt.target.removeEventListener("click", evt);
       selectedBox = null;
       addBoxTargets();
       return;
     }
     firstPanel.appendChild(selectedBox);
+    moveCounter++;
+    moveCounterBox.innerHTML = moveCounter;
     selectedBox.style.margin = "2px 0px";
-    selectedBox.style.border = "2px solid red";
+    selectedBox.style.border = "5px solid red";
     evt.target.removeEventListener("click", evt);
     selectedBox = null;
     addBoxTargets();
@@ -69,15 +76,17 @@ function addPanelTargets() {
     selectedPanel = secondPanel;
     if (checkSizing() === false) {
       selectedBox.style.margin = "2px 0px";
-      selectedBox.style.border = "2px solid red";
+      selectedBox.style.border = "5px solid red";
       evt.target.removeEventListener("click", evt);
       selectedBox = null;
       addBoxTargets();
       return;
     }
     secondPanel.appendChild(selectedBox);
+    moveCounter++;
+    moveCounterBox.innerHTML = moveCounter;
     selectedBox.style.margin = "2px 0px";
-    selectedBox.style.border = "2px solid red";
+    selectedBox.style.border = "5px solid red";
     evt.target.removeEventListener("click", evt);
     selectedBox = null;
     addBoxTargets();
@@ -89,15 +98,17 @@ function addPanelTargets() {
     selectedPanel = thirdPanel;
     if (checkSizing() === false) {
       selectedBox.style.margin = "2px 0px";
-      selectedBox.style.border = "2px solid red";
+      selectedBox.style.border = "5px solid red";
       evt.target.removeEventListener("click", evt);
       selectedBox = null;
       addBoxTargets();
       return;
     }
     thirdPanel.appendChild(selectedBox);
+    moveCounter++;
+    moveCounterBox.innerHTML = moveCounter;
     selectedBox.style.margin = "2px 0px";
-    selectedBox.style.border = "2px solid red";
+    selectedBox.style.border = "5px solid red";
     evt.target.removeEventListener("click", evt);
     selectedBox = null;
     addBoxTargets();
@@ -141,15 +152,13 @@ resetButton.addEventListener("click", function(evt) {
   for (let i = 0; i < 5; i++) {
     firstPanel.appendChild(anyBox[i]);
     anyBox[i].style.margin = "2px 0px";
-    anyBox[i].style.border = "2px solid red";
+    anyBox[i].style.border = "5px solid red";
+    panelContainer.style.display = "flex";
+    winScreen.style.display = "none";
+    moveCounter = 0;
+    moveCounterBox.innerHTML = moveCounter;
   }
 });
-
-function winConditionMet() {
-  if (thirdPanel.childElementCount === 5) {
-    alert("you won!");
-  }
-}
 
 testButton.addEventListener("click", function(evt) {
   evt.preventDefault();
@@ -159,6 +168,17 @@ testButton.addEventListener("click", function(evt) {
   for (let i = 0; i < 4; i++) {
     thirdPanel.appendChild(anyBox[i]);
     anyBox[i].style.margin = "2px 0px";
-    anyBox[i].style.border = "2px solid red";
+    anyBox[i].style.border = "5px solid red";
+    moveCounter = 0;
+    moveCounterBox.innerHTML = moveCounter;
   }
 });
+
+function winConditionMet() {
+  if (thirdPanel.childElementCount === 5) {
+    panelContainer.style.display = "none";
+    winScreen.style.display = "block";
+    winScreen.innerHTML =
+      "Congratulations! You won in " + moveCounter + " moves.";
+  }
+}
