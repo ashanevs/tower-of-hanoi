@@ -3,9 +3,6 @@
 //Lastly, calls function to allow initial interaction with boxes on page load
 
 const anyBox = document.querySelectorAll(".box");
-const firstPanel = document.querySelector(".first-panel");
-const secondPanel = document.querySelector(".second-panel");
-const thirdPanel = document.querySelector(".third-panel");
 const resetButton = document.querySelector(".resetbutton");
 const testButton = document.querySelector(".testbutton");
 const panelContainer = document.querySelector(".container");
@@ -48,10 +45,11 @@ function addBoxTargets() {
 //is appended to the panel before resetting the game-state to await box-interactions again
 
 function addPanelTargets() {
-  firstPanel.addEventListener("click", function(evt) {
+  for (let i = 0; i < 3; i++){
+  panelContainer[i].addEventListener("click", function (evt) {
     evt.preventDefault();
     if (!selectedBox) return;
-    selectedPanel = firstPanel;
+    selectedPanel = panelContainer[i];
     if (checkSizing() === false) {
       selectedBox.style.margin = "2px 0px";
       selectedBox.style.border = "5px solid red";
@@ -60,7 +58,7 @@ function addPanelTargets() {
       addBoxTargets();
       return;
     }
-    firstPanel.appendChild(selectedBox);
+    panelContainer[i].appendChild(selectedBox);
     moveCounter++;
     moveCounterBox.innerHTML = moveCounter;
     selectedBox.style.margin = "2px 0px";
@@ -68,54 +66,7 @@ function addPanelTargets() {
     evt.target.removeEventListener("click", evt);
     selectedBox = null;
     addBoxTargets();
-  });
-
-  secondPanel.addEventListener("click", function(evt) {
-    evt.preventDefault();
-    if (!selectedBox) return;
-    selectedPanel = secondPanel;
-    if (checkSizing() === false) {
-      selectedBox.style.margin = "2px 0px";
-      selectedBox.style.border = "5px solid red";
-      evt.target.removeEventListener("click", evt);
-      selectedBox = null;
-      addBoxTargets();
-      return;
-    }
-    secondPanel.appendChild(selectedBox);
-    moveCounter++;
-    moveCounterBox.innerHTML = moveCounter;
-    selectedBox.style.margin = "2px 0px";
-    selectedBox.style.border = "5px solid red";
-    evt.target.removeEventListener("click", evt);
-    selectedBox = null;
-    addBoxTargets();
-  });
-
-  thirdPanel.addEventListener("click", function(evt) {
-    evt.preventDefault();
-    if (!selectedBox) return;
-    selectedPanel = thirdPanel;
-    if (checkSizing() === false) {
-      selectedBox.style.margin = "2px 0px";
-      selectedBox.style.border = "5px solid red";
-      evt.target.removeEventListener("click", evt);
-      selectedBox = null;
-      addBoxTargets();
-      return;
-    }
-    thirdPanel.appendChild(selectedBox);
-    moveCounter++;
-    moveCounterBox.innerHTML = moveCounter;
-    selectedBox.style.margin = "2px 0px";
-    selectedBox.style.border = "5px solid red";
-    evt.target.removeEventListener("click", evt);
-    selectedBox = null;
-    addBoxTargets();
-    evt.stopPropagation();
-    winConditionMet();
-  });
-}
+  });}
 
 //This function checks to see if a panel is empty, in which case a box-move is always permissable.
 //If the panel is not empty, the function checks to see if the incoming selectedBox is larger than
