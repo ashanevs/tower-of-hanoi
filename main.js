@@ -6,6 +6,7 @@ const anyBox = document.querySelectorAll(".box");
 const firstPanel = document.querySelector(".firstPanel");
 const secondPanel = document.querySelector(".secondPanel");
 const thirdPanel = document.querySelector(".thirdPanel");
+const resetButton = document.querySelector(".resetbutton");
 var selectedBox;
 var selectedPanel;
 addBoxTargets();
@@ -124,3 +125,19 @@ function checkSizing() {
 //   }
 //   return false;
 // }
+
+//The reset button checks to see if the first panel is empty. If it's not,
+//it unloads its contents into the second panel. Then a loop places the divs back
+//into the first panel, in order
+
+resetButton.addEventListener("click", function(evt) {
+  evt.preventDefault();
+  while (firstPanel.firstChild) {
+    secondPanel.appendChild(firstPanel.firstChild);
+  }
+  for (let i = 0; i < 5; i++) {
+    firstPanel.appendChild(anyBox[i]);
+    anyBox[i].style.margin = "2px 0px";
+    anyBox[i].style.border = "2px solid red";
+  }
+});

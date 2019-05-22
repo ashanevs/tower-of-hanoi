@@ -7,10 +7,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 500px;
+  height: 400px;
 }
 h1 {
-  margin: 10px 0px 0px 0px;
+  margin: 20px 0px 0px 0px;
 }
 p {
   margin: 30px 10%;
@@ -26,40 +26,34 @@ p {
   border: 5px solid black;
   width: 28%;
   margin: 0 10px;
-  height: 400px;
+  height: 300px;
 }
 .firstPanel,
 .secondPanel,
 .thirdPanel {
   padding: 0px 0px 10px 0px;
 }
+.box-a,
+.box-b,
+.box-c,
+.box-d,
 .box-e {
-  width: 45%;
-  padding: 20px;
-  margin: 2px 0;
-  border: 2px solid red;
-}
-.box-d {
-  width: 35%;
-  padding: 20px;
-  margin: 2px 0;
-  border: 2px solid red;
-}
-.box-c {
-  width: 25%;
-  padding: 20px;
-  margin: 2px 0;
-  border: 2px solid red;
-}
-.box-b {
-  width: 15%;
-  padding: 20px;
+  padding: 10px;
   margin: 2px 0;
   border: 2px solid red;
 }
 .box-a {
   width: 5%;
-  padding: 20px;
-  margin: 2px 0;
-  border: 2px solid red;
+}
+.box-b {
+  width: 15%;
+}
+.box-c {
+  width: 25%;
+}
+.box-d {
+  width: 35%;
+}
+.box-e {
+  width: 45%;
 }
