@@ -7,6 +7,7 @@ const firstPanel = document.querySelector(".firstPanel");
 const secondPanel = document.querySelector(".secondPanel");
 const thirdPanel = document.querySelector(".thirdPanel");
 const resetButton = document.querySelector(".resetbutton");
+const testButton = document.querySelector(".testbutton");
 var selectedBox;
 var selectedPanel;
 addBoxTargets();
@@ -100,6 +101,8 @@ function addPanelTargets() {
     evt.target.removeEventListener("click", evt);
     selectedBox = null;
     addBoxTargets();
+    evt.stopPropagation();
+    winConditionMet();
   });
 }
 
@@ -137,6 +140,24 @@ resetButton.addEventListener("click", function(evt) {
   }
   for (let i = 0; i < 5; i++) {
     firstPanel.appendChild(anyBox[i]);
+    anyBox[i].style.margin = "2px 0px";
+    anyBox[i].style.border = "2px solid red";
+  }
+});
+
+function winConditionMet() {
+  if (thirdPanel.childElementCount === 5) {
+    alert("you won!");
+  }
+}
+
+testButton.addEventListener("click", function(evt) {
+  evt.preventDefault();
+  while (thirdPanel.firstChild) {
+    secondPanel.appendChild(thirdPanel.firstChild);
+  }
+  for (let i = 0; i < 4; i++) {
+    thirdPanel.appendChild(anyBox[i]);
     anyBox[i].style.margin = "2px 0px";
     anyBox[i].style.border = "2px solid red";
   }
