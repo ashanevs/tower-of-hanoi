@@ -97,14 +97,16 @@ span {
 .selected-box {
   margin: 0px 0px 10px 0px;
 }
-.visibility {
-  display: none;
-}
 .mobile-move-counter,
 .mobile-instructions {
   display: none;
 }
-
+.mobile-dropdown {
+  max-width: 80%;
+}
+.visibility {
+  display: none;
+}
 @media screen and (max-width: 800px) {
   .button-div {
     flex-direction: column;
@@ -149,5 +151,8 @@ span {
     display: block;
     margin: 0px 0px;
     text-decoration: underline;
+  }
+  .mobile-dropdown {
+    display: block;
   }
 }

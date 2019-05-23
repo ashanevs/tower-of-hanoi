@@ -3,9 +3,6 @@
 //Lastly, calls function to allow initial interaction with boxes on page load
 
 const anyBox = document.querySelectorAll(".box");
-// const firstPanel = document.querySelector(".first-panel");
-// const secondPanel = document.querySelector(".second-panel");
-// const thirdPanel = document.querySelector(".third-panel");
 const resetButton = document.querySelector(".resetbutton");
 const testButton = document.querySelector(".testbutton");
 const threePanels = document.querySelectorAll(".panels");
@@ -17,10 +14,11 @@ const normalButton = document.querySelector(".normalmode");
 const hardButton = document.querySelector(".hardmode");
 const mobileInstructions = document.querySelector(".mobile-instructions");
 const mobileDropdown = document.querySelector(".instructions-dropdown");
+var cheater = false;
 var selectedBox;
 var selectedPanel;
 var moveCounter = 0;
-var winningBoxCount = 6;
+var bestOutcome = 0;
 
 addBoxTargets();
 threePanels[2].appendChild(anyBox[0]);
@@ -37,7 +35,6 @@ function addBoxTargets() {
       if (!selectedBox) {
         selectedBox = evt.target;
         if (selectedBox.nextElementSibling === null) {
-          // anyBox[i].style.border = "5px solid black";
           anyBox[i].style.margin = "0px 0px 10px 0px";
           evt.stopPropagation();
           addPanelTargets();
@@ -63,7 +60,6 @@ function addPanelTargets() {
       selectedPanel = threePanels[i];
       if (checkSizing() === false) {
         selectedBox.style.margin = "2px 0px";
-        // selectedBox.style.border = "5px solid black";
         evt.target.removeEventListener("click", evt);
         selectedBox = null;
         addBoxTargets();
@@ -73,7 +69,6 @@ function addPanelTargets() {
       moveCounter++;
       moveCounterBox.innerHTML = moveCounter;
       selectedBox.style.margin = "2px 0px";
-      // selectedBox.style.border = "5px solid black";
       evt.target.removeEventListener("click", evt);
       selectedBox = null;
       addBoxTargets();
@@ -81,76 +76,6 @@ function addPanelTargets() {
     });
   }
 }
-
-// function addPanelTargets() {
-//   firstPanel.addEventListener("click", function(evt) {
-//     evt.preventDefault();
-//     if (!selectedBox) return;
-//     selectedPanel = firstPanel;
-//     if (checkSizing() === false) {
-//       selectedBox.style.margin = "2px 0px";
-//       selectedBox.style.border = "5px solid red";
-//       evt.target.removeEventListener("click", evt);
-//       selectedBox = null;
-//       addBoxTargets();
-//       return;
-//     }
-//     firstPanel.appendChild(selectedBox);
-//     moveCounter++;
-//     moveCounterBox.innerHTML = moveCounter;
-//     selectedBox.style.margin = "2px 0px";
-//     selectedBox.style.border = "5px solid red";
-//     evt.target.removeEventListener("click", evt);
-//     selectedBox = null;
-//     addBoxTargets();
-//   });
-
-//   secondPanel.addEventListener("click", function(evt) {
-//     evt.preventDefault();
-//     if (!selectedBox) return;
-//     selectedPanel = secondPanel;
-//     if (checkSizing() === false) {
-//       selectedBox.style.margin = "2px 0px";
-//       selectedBox.style.border = "5px solid red";
-//       evt.target.removeEventListener("click", evt);
-//       selectedBox = null;
-//       addBoxTargets();
-//       return;
-//     }
-//     secondPanel.appendChild(selectedBox);
-//     moveCounter++;
-//     moveCounterBox.innerHTML = moveCounter;
-//     selectedBox.style.margin = "2px 0px";
-//     selectedBox.style.border = "5px solid red";
-//     evt.target.removeEventListener("click", evt);
-//     selectedBox = null;
-//     addBoxTargets();
-//   });
-
-//   thirdPanel.addEventListener("click", function(evt) {
-//     evt.preventDefault();
-//     if (!selectedBox) return;
-//     selectedPanel = thirdPanel;
-//     if (checkSizing() === false) {
-//       selectedBox.style.margin = "2px 0px";
-//       selectedBox.style.border = "5px solid red";
-//       evt.target.removeEventListener("click", evt);
-//       selectedBox = null;
-//       addBoxTargets();
-//       return;
-//     }
-//     thirdPanel.appendChild(selectedBox);
-//     moveCounter++;
-//     moveCounterBox.innerHTML = moveCounter;
-//     selectedBox.style.margin = "2px 0px";
-//     selectedBox.style.border = "5px solid red";
-//     evt.target.removeEventListener("click", evt);
-//     selectedBox = null;
-//     addBoxTargets();
-//     evt.stopPropagation();
-//     winConditionMet();
-//   });
-// }
 
 //This function checks to see if a panel is empty, in which case a box-move is always permissable.
 //If the panel is not empty, the function checks to see if the incoming selectedBox is larger than
@@ -166,15 +91,6 @@ function checkSizing() {
   }
 }
 
-//This function was never incorporated and might not be used
-
-// function checkBoxForSibling() {
-//   if (selectedBox.nextElementSibling === null) {
-//     return;
-//   }
-//   return false;
-// }
-
 //The reset button checks to see if the first panel is empty. If it's not,
 //it unloads its contents into the second panel. Then a loop places the divs back
 //into the first panel, in order
@@ -186,14 +102,13 @@ resetButton.addEventListener("click", function(evt) {
 
 testButton.addEventListener("click", function(evt) {
   evt.preventDefault();
-  winningBoxCount = 6;
+  cheater = true;
   while (threePanels[2].firstChild) {
     threePanels[1].appendChild(threePanels[2].firstChild);
   }
   for (let i = 0; i < 5; i++) {
     threePanels[2].appendChild(anyBox[i]);
     anyBox[i].style.margin = "2px 0px";
-    // anyBox[i].style.border = "5px solid black";
     moveCounter = 0;
     moveCounterBox.innerHTML = moveCounter;
   }
@@ -231,11 +146,15 @@ hardButton.addEventListener("click", function(evt) {
 });
 
 function winConditionMet() {
-  if (threePanels[2].childElementCount === winningBoxCount) {
+  if (threePanels[2].childElementCount === 6) {
     panelContainer.style.display = "none";
     winScreen.style.display = "block";
-    winScreen.innerHTML =
-      "Congratulations! You won in " + moveCounter + " moves.";
+    if (cheater === true) {
+      winScreen.innerHTML =
+        "Congratulations! You're a cheater. Shame shame shame.";
+    } else
+      winScreen.innerHTML =
+        "Congratulations! You won in " + moveCounter + " moves.";
     easyButton.style.display = "none";
     normalButton.style.display = "none";
     hardButton.style.display = "none";
@@ -246,6 +165,7 @@ function winConditionMet() {
 }
 
 function resetGame() {
+  cheater = false;
   resetButton.style.display = "none";
   easyButton.style.display = "block";
   normalButton.style.display = "block";
@@ -258,7 +178,6 @@ function resetGame() {
   for (let i = 0; i < 6; i++) {
     threePanels[0].appendChild(anyBox[i]);
     anyBox[i].style.margin = "2px 0px";
-    // anyBox[i].style.border = "5px solid black";
     panelContainer.style.display = "flex";
     winScreen.style.display = "none";
     moveCounter = 0;
