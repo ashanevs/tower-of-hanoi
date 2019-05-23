@@ -131,7 +131,6 @@ testButton.addEventListener("click", function(evt) {
   for (let i = 0; i < 5; i++) {
     threePanels[2].appendChild(anyBox[i]);
     anyBox[i].style.margin = "2px 0px";
-    moveCounter = 0;
     moveCounterBox[0].innerHTML = moveCounter;
     moveCounterBox[1].innerHTML = moveCounter;
   }
