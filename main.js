@@ -99,7 +99,6 @@ function checkSizing() {
 
 resetButton.addEventListener("click", function(evt) {
   evt.preventDefault();
-  resetGame();
   if (gameDifficulty === 1) {
     setDifficultyEasy();
   }
@@ -128,19 +127,16 @@ testButton.addEventListener("click", function(evt) {
 
 easyButton.addEventListener("click", function(evt) {
   evt.preventDefault();
-  resetGame();
   setDifficultyEasy();
 });
 
 normalButton.addEventListener("click", function(evt) {
   evt.preventDefault();
-  resetGame();
   setDifficultyNormal();
 });
 
 hardButton.addEventListener("click", function(evt) {
   evt.preventDefault();
-  resetGame();
   setDifficultyHard();
 });
 
@@ -176,6 +172,7 @@ function winConditionMet() {
 
 function resetGame() {
   cheater = false;
+  moveCounter = 0;
   resetButton.style.display = "none";
   easyButton.style.display = "block";
   normalButton.style.display = "block";
@@ -200,11 +197,11 @@ function resetGame() {
 
 mobileInstructions.addEventListener("click", function(evt) {
   evt.preventDefault();
-  mobileDropdown.classList.toggle("visibility");
+  mobileDropdown.classList.toggle("toggle-visibility");
 });
 
 function setDifficultyEasy() {
-  moveCounter = 0;
+  resetGame();
   bestOutcome = 7;
   gameDifficulty = 1;
   anyBox[0].style.display = "none";
@@ -215,7 +212,7 @@ function setDifficultyEasy() {
   threePanels[2].appendChild(anyBox[2]);
 }
 function setDifficultyNormal() {
-  moveCounter = 0;
+  resetGame();
   bestOutcome = 31;
   gameDifficulty = 2;
   anyBox[0].style.display = "none";
@@ -224,7 +221,7 @@ function setDifficultyNormal() {
   threePanels[2].appendChild(anyBox[0]);
 }
 function setDifficultyHard() {
-  moveCounter = 0;
+  resetGame();
   bestOutcome = 63;
   gameDifficulty = 3;
   if (threePanels[0].childElementCount === 5) {
