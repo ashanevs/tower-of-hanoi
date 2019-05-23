@@ -3,9 +3,9 @@
 //Lastly, calls function to allow initial interaction with boxes on page load
 
 const anyBox = document.querySelectorAll(".box");
-const firstPanel = document.querySelector(".first-panel");
-const secondPanel = document.querySelector(".second-panel");
-const thirdPanel = document.querySelector(".third-panel");
+// const firstPanel = document.querySelector(".first-panel");
+// const secondPanel = document.querySelector(".second-panel");
+// const thirdPanel = document.querySelector(".third-panel");
 const resetButton = document.querySelector(".resetbutton");
 const testButton = document.querySelector(".testbutton");
 const threePanels = document.querySelectorAll(".panels");
@@ -18,8 +18,10 @@ const hardButton = document.querySelector(".hardmode");
 var selectedBox;
 var selectedPanel;
 var moveCounter = 0;
+var winningBoxCount = 6;
 
 addBoxTargets();
+threePanels[2].appendChild(anyBox[0]);
 
 //This function adds event listeners to the boxes. It checks to make sure no box is currently selected,
 //and also checks to make sure that there is no box above the selection (to ensure you can only
@@ -33,7 +35,7 @@ function addBoxTargets() {
       if (!selectedBox) {
         selectedBox = evt.target;
         if (selectedBox.nextElementSibling === null) {
-          anyBox[i].style.border = "5px solid red";
+          // anyBox[i].style.border = "5px solid black";
           anyBox[i].style.margin = "0px 0px 10px 0px";
           evt.stopPropagation();
           addPanelTargets();
@@ -59,7 +61,7 @@ function addPanelTargets() {
       selectedPanel = threePanels[i];
       if (checkSizing() === false) {
         selectedBox.style.margin = "2px 0px";
-        selectedBox.style.border = "5px solid red";
+        // selectedBox.style.border = "5px solid black";
         evt.target.removeEventListener("click", evt);
         selectedBox = null;
         addBoxTargets();
@@ -69,7 +71,7 @@ function addPanelTargets() {
       moveCounter++;
       moveCounterBox.innerHTML = moveCounter;
       selectedBox.style.margin = "2px 0px";
-      selectedBox.style.border = "5px solid red";
+      // selectedBox.style.border = "5px solid black";
       evt.target.removeEventListener("click", evt);
       selectedBox = null;
       addBoxTargets();
@@ -177,41 +179,85 @@ function checkSizing() {
 
 resetButton.addEventListener("click", function(evt) {
   evt.preventDefault();
-  testButton.disabled = false;
-  while (threePanels[0].firstChild) {
-    threePanels[1].appendChild(threePanels[0].firstChild);
-  }
-  for (let i = 0; i < 6; i++) {
-    threePanels[0].appendChild(anyBox[i]);
-    anyBox[i].style.margin = "2px 0px";
-    anyBox[i].style.border = "5px solid red";
-    panelContainer.style.display = "flex";
-    winScreen.style.display = "none";
-    moveCounter = 0;
-    moveCounterBox.innerHTML = moveCounter;
-  }
+  resetGame();
 });
 
 testButton.addEventListener("click", function(evt) {
   evt.preventDefault();
+  winningBoxCount = 6;
   while (threePanels[2].firstChild) {
     threePanels[1].appendChild(threePanels[2].firstChild);
   }
   for (let i = 0; i < 5; i++) {
     threePanels[2].appendChild(anyBox[i]);
     anyBox[i].style.margin = "2px 0px";
-    anyBox[i].style.border = "5px solid red";
+    // anyBox[i].style.border = "5px solid black";
     moveCounter = 0;
     moveCounterBox.innerHTML = moveCounter;
   }
 });
 
+easyButton.addEventListener("click", function(evt) {
+  evt.preventDefault();
+  resetGame();
+  anyBox[0].style.display = "none";
+  anyBox[1].style.display = "none";
+  anyBox[2].style.display = "none";
+  threePanels[2].appendChild(anyBox[0]);
+  threePanels[2].appendChild(anyBox[1]);
+  threePanels[2].appendChild(anyBox[2]);
+});
+
+normalButton.addEventListener("click", function(evt) {
+  evt.preventDefault();
+  resetGame();
+  anyBox[0].style.display = "none";
+  anyBox[1].style.display = "block";
+  anyBox[2].style.display = "block";
+  threePanels[2].appendChild(anyBox[0]);
+});
+
+hardButton.addEventListener("click", function(evt) {
+  evt.preventDefault();
+  resetGame();
+  if (threePanels[0].childElementCount === 5) {
+    threePanels[0].appendChild(anyBox[0]);
+  }
+  anyBox[0].style.display = "block";
+  anyBox[1].style.display = "block";
+  anyBox[2].style.display = "block";
+});
+
 function winConditionMet() {
-  if (threePanels[2].childElementCount === 6) {
+  if (threePanels[2].childElementCount === winningBoxCount) {
     panelContainer.style.display = "none";
     winScreen.style.display = "block";
     winScreen.innerHTML =
       "Congratulations! You won in " + moveCounter + " moves.";
-    testButton.disabled = true;
+    easyButton.style.display = "none";
+    normalButton.style.display = "none";
+    hardButton.style.display = "none";
+    resetButton.style.display = "block";
+    testButton.style.display = "none";
+  }
+}
+
+function resetGame() {
+  resetButton.style.display = "none";
+  easyButton.style.display = "block";
+  normalButton.style.display = "block";
+  hardButton.style.display = "block";
+  testButton.style.display = "block";
+  while (threePanels[0].firstChild) {
+    threePanels[1].appendChild(threePanels[0].firstChild);
+  }
+  for (let i = 0; i < 6; i++) {
+    threePanels[0].appendChild(anyBox[i]);
+    anyBox[i].style.margin = "2px 0px";
+    // anyBox[i].style.border = "5px solid black";
+    panelContainer.style.display = "flex";
+    winScreen.style.display = "none";
+    moveCounter = 0;
+    moveCounterBox.innerHTML = moveCounter;
   }
 }
