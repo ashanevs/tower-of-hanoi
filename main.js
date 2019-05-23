@@ -241,6 +241,7 @@ function winConditionMet() {
     hardButton.style.display = "none";
     resetButton.style.display = "block";
     testButton.style.display = "none";
+    mobileInstructions.style.display = "none";
   }
 }
 
@@ -250,6 +251,7 @@ function resetGame() {
   normalButton.style.display = "block";
   hardButton.style.display = "block";
   testButton.style.display = "block";
+  mobileInstructions.style.display = "block";
   while (threePanels[0].firstChild) {
     threePanels[1].appendChild(threePanels[0].firstChild);
   }
@@ -266,5 +268,5 @@ function resetGame() {
 
 mobileInstructions.addEventListener("click", function(evt) {
   evt.preventDefault();
-  mobileDropdown.style.display = "block";
+  mobileDropdown.classList.toggle("visibility");
 });

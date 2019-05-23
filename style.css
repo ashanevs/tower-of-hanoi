@@ -98,11 +98,10 @@ span {
   margin: 0px 0px 10px 0px;
 }
 .visibility {
-  display: block;
+  display: none;
 }
 .mobile-move-counter,
-.mobile-instructions,
-.instructions-dropdown {
+.mobile-instructions {
   display: none;
 }
 
@@ -149,8 +148,6 @@ span {
   .mobile-instructions {
     display: block;
     margin: 0px 0px;
-  }
-  .mobile-instructions:hover {
     text-decoration: underline;
   }
 }
