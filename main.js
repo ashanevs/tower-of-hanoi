@@ -3,11 +3,18 @@
 //Lastly, calls function to allow initial interaction with boxes on page load
 
 const anyBox = document.querySelectorAll(".box");
+const firstPanel = document.querySelector(".first-panel");
+const secondPanel = document.querySelector(".second-panel");
+const thirdPanel = document.querySelector(".third-panel");
 const resetButton = document.querySelector(".resetbutton");
 const testButton = document.querySelector(".testbutton");
+const threePanels = document.querySelectorAll(".panels");
 const panelContainer = document.querySelector(".container");
 const winScreen = document.querySelector(".win-screen");
 const moveCounterBox = document.querySelector(".move-counter");
+const easyButton = document.querySelector(".easymode");
+const normalButton = document.querySelector(".normalmode");
+const hardButton = document.querySelector(".hardmode");
 var selectedBox;
 var selectedPanel;
 var moveCounter = 0;
@@ -20,7 +27,7 @@ addBoxTargets();
 //calls the function allowing the panel destination to be clicked
 
 function addBoxTargets() {
-  for (let i = 0; i < 5; i++)
+  for (let i = 0; i < 6; i++)
     anyBox[i].addEventListener("click", function(evt) {
       evt.preventDefault();
       if (!selectedBox) {
@@ -45,28 +52,101 @@ function addBoxTargets() {
 //is appended to the panel before resetting the game-state to await box-interactions again
 
 function addPanelTargets() {
-  for (let i = 0; i < 3; i++){
-  panelContainer[i].addEventListener("click", function (evt) {
-    evt.preventDefault();
-    if (!selectedBox) return;
-    selectedPanel = panelContainer[i];
-    if (checkSizing() === false) {
+  for (let i = 0; i < 3; i++) {
+    threePanels[i].addEventListener("click", function(evt) {
+      evt.preventDefault();
+      if (!selectedBox) return;
+      selectedPanel = threePanels[i];
+      if (checkSizing() === false) {
+        selectedBox.style.margin = "2px 0px";
+        selectedBox.style.border = "5px solid red";
+        evt.target.removeEventListener("click", evt);
+        selectedBox = null;
+        addBoxTargets();
+        return;
+      }
+      threePanels[i].appendChild(selectedBox);
+      moveCounter++;
+      moveCounterBox.innerHTML = moveCounter;
       selectedBox.style.margin = "2px 0px";
       selectedBox.style.border = "5px solid red";
       evt.target.removeEventListener("click", evt);
       selectedBox = null;
       addBoxTargets();
-      return;
-    }
-    panelContainer[i].appendChild(selectedBox);
-    moveCounter++;
-    moveCounterBox.innerHTML = moveCounter;
-    selectedBox.style.margin = "2px 0px";
-    selectedBox.style.border = "5px solid red";
-    evt.target.removeEventListener("click", evt);
-    selectedBox = null;
-    addBoxTargets();
-  });}
+      winConditionMet();
+    });
+  }
+}
+
+// function addPanelTargets() {
+//   firstPanel.addEventListener("click", function(evt) {
+//     evt.preventDefault();
+//     if (!selectedBox) return;
+//     selectedPanel = firstPanel;
+//     if (checkSizing() === false) {
+//       selectedBox.style.margin = "2px 0px";
+//       selectedBox.style.border = "5px solid red";
+//       evt.target.removeEventListener("click", evt);
+//       selectedBox = null;
+//       addBoxTargets();
+//       return;
+//     }
+//     firstPanel.appendChild(selectedBox);
+//     moveCounter++;
+//     moveCounterBox.innerHTML = moveCounter;
+//     selectedBox.style.margin = "2px 0px";
+//     selectedBox.style.border = "5px solid red";
+//     evt.target.removeEventListener("click", evt);
+//     selectedBox = null;
+//     addBoxTargets();
+//   });
+
+//   secondPanel.addEventListener("click", function(evt) {
+//     evt.preventDefault();
+//     if (!selectedBox) return;
+//     selectedPanel = secondPanel;
+//     if (checkSizing() === false) {
+//       selectedBox.style.margin = "2px 0px";
+//       selectedBox.style.border = "5px solid red";
+//       evt.target.removeEventListener("click", evt);
+//       selectedBox = null;
+//       addBoxTargets();
+//       return;
+//     }
+//     secondPanel.appendChild(selectedBox);
+//     moveCounter++;
+//     moveCounterBox.innerHTML = moveCounter;
+//     selectedBox.style.margin = "2px 0px";
+//     selectedBox.style.border = "5px solid red";
+//     evt.target.removeEventListener("click", evt);
+//     selectedBox = null;
+//     addBoxTargets();
+//   });
+
+//   thirdPanel.addEventListener("click", function(evt) {
+//     evt.preventDefault();
+//     if (!selectedBox) return;
+//     selectedPanel = thirdPanel;
+//     if (checkSizing() === false) {
+//       selectedBox.style.margin = "2px 0px";
+//       selectedBox.style.border = "5px solid red";
+//       evt.target.removeEventListener("click", evt);
+//       selectedBox = null;
+//       addBoxTargets();
+//       return;
+//     }
+//     thirdPanel.appendChild(selectedBox);
+//     moveCounter++;
+//     moveCounterBox.innerHTML = moveCounter;
+//     selectedBox.style.margin = "2px 0px";
+//     selectedBox.style.border = "5px solid red";
+//     evt.target.removeEventListener("click", evt);
+//     selectedBox = null;
+//     addBoxTargets();
+//     evt.stopPropagation();
+//     winConditionMet();
+//   });
+// }
 
 //This function checks to see if a panel is empty, in which case a box-move is always permissable.
 //If the panel is not empty, the function checks to see if the incoming selectedBox is larger than
@@ -97,11 +177,12 @@ function checkSizing() {
 
 resetButton.addEventListener("click", function(evt) {
   evt.preventDefault();
-  while (firstPanel.firstChild) {
-    secondPanel.appendChild(firstPanel.firstChild);
+  testButton.disabled = false;
+  while (threePanels[0].firstChild) {
+    threePanels[1].appendChild(threePanels[0].firstChild);
   }
-  for (let i = 0; i < 5; i++) {
-    firstPanel.appendChild(anyBox[i]);
+  for (let i = 0; i < 6; i++) {
+    threePanels[0].appendChild(anyBox[i]);
     anyBox[i].style.margin = "2px 0px";
     anyBox[i].style.border = "5px solid red";
     panelContainer.style.display = "flex";
@@ -113,11 +194,11 @@ resetButton.addEventListener("click", function(evt) {
 
 testButton.addEventListener("click", function(evt) {
   evt.preventDefault();
-  while (thirdPanel.firstChild) {
-    secondPanel.appendChild(thirdPanel.firstChild);
+  while (threePanels[2].firstChild) {
+    threePanels[1].appendChild(threePanels[2].firstChild);
   }
-  for (let i = 0; i < 4; i++) {
-    thirdPanel.appendChild(anyBox[i]);
+  for (let i = 0; i < 5; i++) {
+    threePanels[2].appendChild(anyBox[i]);
     anyBox[i].style.margin = "2px 0px";
     anyBox[i].style.border = "5px solid red";
     moveCounter = 0;
@@ -126,10 +207,11 @@ testButton.addEventListener("click", function(evt) {
 });
 
 function winConditionMet() {
-  if (thirdPanel.childElementCount === 5) {
+  if (threePanels[2].childElementCount === 6) {
     panelContainer.style.display = "none";
     winScreen.style.display = "block";
     winScreen.innerHTML =
       "Congratulations! You won in " + moveCounter + " moves.";
+    testButton.disabled = true;
   }
 }
