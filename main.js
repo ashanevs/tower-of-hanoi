@@ -15,6 +15,8 @@ const moveCounterBox = document.querySelector(".move-counter");
 const easyButton = document.querySelector(".easymode");
 const normalButton = document.querySelector(".normalmode");
 const hardButton = document.querySelector(".hardmode");
+const mobileInstructions = document.querySelector(".mobile-instructions");
+const mobileDropdown = document.querySelector(".instructions-dropdown");
 var selectedBox;
 var selectedPanel;
 var moveCounter = 0;
@@ -261,3 +263,8 @@ function resetGame() {
     moveCounterBox.innerHTML = moveCounter;
   }
 }
+
+mobileInstructions.addEventListener("click", function(evt) {
+  evt.preventDefault();
+  mobileDropdown.style.display = "block";
+});

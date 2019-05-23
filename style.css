@@ -97,9 +97,15 @@ span {
 .selected-box {
   margin: 0px 0px 10px 0px;
 }
-.mobile-move-counter {
+.visibility {
+  display: block;
+}
+.mobile-move-counter,
+.mobile-instructions,
+.instructions-dropdown {
   display: none;
 }
+
 @media screen and (max-width: 800px) {
   .button-div {
     flex-direction: column;
@@ -123,10 +129,11 @@ span {
     height: 200px;
   }
   .container {
-    height: 300px;
+    height: 250px;
   }
   h1 {
     margin: 0;
+    padding: 5px 0px;
   }
   .normal-move-counter {
     display: none;
@@ -135,5 +142,15 @@ span {
     display: block;
     width: 30%;
     font-size: 32px;
+  }
+  .normal-instructions {
+    display: none;
+  }
+  .mobile-instructions {
+    display: block;
+    margin: 0px 0px;
+  }
+  .mobile-instructions:hover {
+    text-decoration: underline;
   }
 }
