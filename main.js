@@ -8,7 +8,7 @@ const testButton = document.querySelector(".testbutton");
 const threePanels = document.querySelectorAll(".panels");
 const panelContainer = document.querySelector(".container");
 const winScreen = document.querySelector(".win-screen");
-const moveCounterBox = document.querySelector(".move-counter");
+const moveCounterBox = document.querySelectorAll(".move-counter");
 const easyButton = document.querySelector(".easymode");
 const normalButton = document.querySelector(".normalmode");
 const hardButton = document.querySelector(".hardmode");
@@ -18,7 +18,8 @@ var cheater = false;
 var selectedBox;
 var selectedPanel;
 var moveCounter = 0;
-var bestOutcome = 0;
+var bestOutcome = 31;
+var gameDifficulty = 2;
 
 addBoxTargets();
 threePanels[2].appendChild(anyBox[0]);
@@ -67,7 +68,8 @@ function addPanelTargets() {
       }
       threePanels[i].appendChild(selectedBox);
       moveCounter++;
-      moveCounterBox.innerHTML = moveCounter;
+      moveCounterBox[0].innerHTML = moveCounter;
+      moveCounterBox[1].innerHTML = moveCounter;
       selectedBox.style.margin = "2px 0px";
       evt.target.removeEventListener("click", evt);
       selectedBox = null;
@@ -98,6 +100,15 @@ function checkSizing() {
 resetButton.addEventListener("click", function(evt) {
   evt.preventDefault();
   resetGame();
+  if (gameDifficulty === 1) {
+    setDifficultyEasy();
+  }
+  if (gameDifficulty === 2) {
+    setDifficultyNormal();
+  }
+  if (gameDifficulty === 3) {
+    setDifficultyHard();
+  }
 });
 
 testButton.addEventListener("click", function(evt) {
@@ -110,39 +121,27 @@ testButton.addEventListener("click", function(evt) {
     threePanels[2].appendChild(anyBox[i]);
     anyBox[i].style.margin = "2px 0px";
     moveCounter = 0;
-    moveCounterBox.innerHTML = moveCounter;
+    moveCounterBox[0].innerHTML = moveCounter;
+    moveCounterBox[1].innerHTML = moveCounter;
   }
 });
 
 easyButton.addEventListener("click", function(evt) {
   evt.preventDefault();
   resetGame();
-  anyBox[0].style.display = "none";
-  anyBox[1].style.display = "none";
-  anyBox[2].style.display = "none";
-  threePanels[2].appendChild(anyBox[0]);
-  threePanels[2].appendChild(anyBox[1]);
-  threePanels[2].appendChild(anyBox[2]);
+  setDifficultyEasy();
 });
 
 normalButton.addEventListener("click", function(evt) {
   evt.preventDefault();
   resetGame();
-  anyBox[0].style.display = "none";
-  anyBox[1].style.display = "block";
-  anyBox[2].style.display = "block";
-  threePanels[2].appendChild(anyBox[0]);
+  setDifficultyNormal();
 });
 
 hardButton.addEventListener("click", function(evt) {
   evt.preventDefault();
   resetGame();
-  if (threePanels[0].childElementCount === 5) {
-    threePanels[0].appendChild(anyBox[0]);
-  }
-  anyBox[0].style.display = "block";
-  anyBox[1].style.display = "block";
-  anyBox[2].style.display = "block";
+  setDifficultyHard();
 });
 
 function winConditionMet() {
@@ -151,16 +150,27 @@ function winConditionMet() {
     winScreen.style.display = "block";
     if (cheater === true) {
       winScreen.innerHTML =
-        "Congratulations! You're a cheater. Shame shame shame.";
-    } else
+        "Congratulations! You cheated! The fewest moves possible was " +
+        bestOutcome +
+        ".";
+    } else if (moveCounter === bestOutcome) {
       winScreen.innerHTML =
-        "Congratulations! You won in " + moveCounter + " moves.";
+        "Congratulations! You won in " +
+        moveCounter +
+        " moves. That's the fewest moves possible, great job!";
+    } else {
+      winScreen.innerHTML =
+        "Congratulations! You won in " +
+        moveCounter +
+        " moves. The fewest moves possible was " +
+        bestOutcome +
+        ".";
+    }
     easyButton.style.display = "none";
     normalButton.style.display = "none";
     hardButton.style.display = "none";
     resetButton.style.display = "block";
     testButton.style.display = "none";
-    mobileInstructions.style.display = "none";
   }
 }
 
@@ -171,21 +181,56 @@ function resetGame() {
   normalButton.style.display = "block";
   hardButton.style.display = "block";
   testButton.style.display = "block";
-  mobileInstructions.style.display = "block";
   while (threePanels[0].firstChild) {
     threePanels[1].appendChild(threePanels[0].firstChild);
+  }
+  while (threePanels[2].firstChild) {
+    threePanels[1].appendChild(threePanels[2].firstChild);
   }
   for (let i = 0; i < 6; i++) {
     threePanels[0].appendChild(anyBox[i]);
     anyBox[i].style.margin = "2px 0px";
-    panelContainer.style.display = "flex";
-    winScreen.style.display = "none";
-    moveCounter = 0;
-    moveCounterBox.innerHTML = moveCounter;
   }
+  panelContainer.style.display = "flex";
+  winScreen.style.display = "none";
+  moveCounter = 0;
+  moveCounterBox[0].innerHTML = moveCounter;
+  moveCounterBox[1].innerHTML = moveCounter;
 }
 
 mobileInstructions.addEventListener("click", function(evt) {
   evt.preventDefault();
   mobileDropdown.classList.toggle("visibility");
 });
+
+function setDifficultyEasy() {
+  moveCounter = 0;
+  bestOutcome = 7;
+  gameDifficulty = 1;
+  anyBox[0].style.display = "none";
+  anyBox[1].style.display = "none";
+  anyBox[2].style.display = "none";
+  threePanels[2].appendChild(anyBox[0]);
+  threePanels[2].appendChild(anyBox[1]);
+  threePanels[2].appendChild(anyBox[2]);
+}
+function setDifficultyNormal() {
+  moveCounter = 0;
+  bestOutcome = 31;
+  gameDifficulty = 2;
+  anyBox[0].style.display = "none";
+  anyBox[1].style.display = "block";
+  anyBox[2].style.display = "block";
+  threePanels[2].appendChild(anyBox[0]);
+}
+function setDifficultyHard() {
+  moveCounter = 0;
+  bestOutcome = 63;
+  gameDifficulty = 3;
+  if (threePanels[0].childElementCount === 5) {
+    threePanels[0].appendChild(anyBox[0]);
+  }
+  anyBox[0].style.display = "block";
+  anyBox[1].style.display = "block";
+  anyBox[2].style.display = "block";
+}

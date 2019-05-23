@@ -150,9 +150,5 @@ span {
   .mobile-instructions {
     display: block;
     margin: 0px 0px;
-    text-decoration: underline;
-  }
-  .mobile-dropdown {
-    display: block;
   }
 }
